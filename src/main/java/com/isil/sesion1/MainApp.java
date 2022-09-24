@@ -5,16 +5,15 @@ import java.sql.*;
 public class MainApp {
     public static void main(String[] args) throws Exception{
 
-        // 1. Cargar driver
+        // 1. Load the JDBC driver
         Class.forName("com.mysql.cj.jdbc.Driver");
-        // 2. Crear conexión
+
+        // 2. Get a connection to the databasse
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/DESAI",
                 "root",
                 "root");
 
-        //int resultUpdate = stmt.executeUpdate("UPDATE Users set phone='44445666',city='Rosario' where name='Messi'");
-
-        // 3. Crear statement
+        // 3. Create a statement
         // 3.1 Statement mantenimiento
         Statement stCreate = con.createStatement();
         //int filasAfectadas = stCreate.executeUpdate("insert into Users VALUES(6, 'Maria','98475525','Quito')");
@@ -29,16 +28,16 @@ public class MainApp {
                 con.prepareStatement("SELECT * FROM Users where idUser=?");
         preparedStatement.setInt(1, 1);
 
-        // 4. Ejecutar query
+        // 4. Execute a SQL Query
         ResultSet resultSet2 = preparedStatement.executeQuery();
 
-        // 5. Recorrer resultados
+        // 5. Iterate the result set abd print the values
         while(resultSet2.next()){
-            System.out.println(resultSet2.getString("name") + "\n" +
-                    resultSet2.getString("phone") + "\n" +
+            System.out.println(resultSet2.getString("name") + ", " +
+                    resultSet2.getString("phone") + ", " +
                     resultSet2.getString("city"));
         }
-        // 6. Cerrar conexión
+        // 6. Close the result set, statement and the connection
         con.close();
     }
 }
